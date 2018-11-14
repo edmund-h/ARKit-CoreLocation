@@ -285,7 +285,7 @@ public class SceneLocationView: ARSCNView, ARSCNViewDelegate {
             return
         }
 
-        updatePositionAndScaleOfLocationNode(locationNode: locationNode, initialSetup: true, animated: false)
+        updatePositionAndScaleOfLocationNode(locationNode, initialSetup: true, animated: false)
 
         locationNodes.append(locationNode)
         sceneNode?.addChildNode(locationNode)
@@ -369,11 +369,11 @@ public class SceneLocationView: ARSCNView, ARSCNViewDelegate {
 
     func updatePositionAndScaleOfLocationNodes() {
         for locationNode in locationNodes where locationNode.continuallyUpdatePositionAndScale {
-            updatePositionAndScaleOfLocationNode(locationNode: locationNode, animated: true)
+            updatePositionAndScaleOfLocationNode(locationNode, animated: true)
         }
     }
 
-    public func updatePositionAndScaleOfLocationNode(locationNode: LocationNode, initialSetup: Bool = false, animated: Bool = false, duration: TimeInterval = 0.1) {
+    public func updatePositionAndScaleOfLocationNode(_ locationNode: LocationNode, initialSetup: Bool = false, animated: Bool = false, duration: TimeInterval = 0.1) {
         guard let currentPosition = currentScenePosition(),
             let currentLocation = currentLocation() else {
             return
