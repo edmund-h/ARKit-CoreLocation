@@ -209,12 +209,12 @@ public class SceneLocationView: ARSCNView, ARSCNViewDelegate {
     }
 
     private func removeOldLocationEstimates(currentScenePosition: SCNVector3) {
-        let currentPoint = CGPoint.pointWithVector(vector: currentScenePosition)
+        let currentPoint = CGPoint.pointWithVector(currentScenePosition)
 
         sceneLocationEstimates = sceneLocationEstimates.filter({
-            let point = CGPoint.pointWithVector(vector: $0.position)
+            let point = CGPoint.pointWithVector($0.position)
 
-            let radiusContainsPoint = currentPoint.radiusContainsPoint(radius: CGFloat(SceneLocationView.sceneLimit), point: point)
+            let radiusContainsPoint = currentPoint.radiusContainsPoint(point, radius: CGFloat(SceneLocationView.sceneLimit))
 
             if !radiusContainsPoint {
                 locationDelegate?.sceneLocationViewDidRemoveSceneLocationEstimate(sceneLocationView: self, position: $0.position, location: $0.location)
@@ -255,7 +255,7 @@ public class SceneLocationView: ARSCNView, ARSCNViewDelegate {
 
     // MARK: - LocationNodes
     ///upon being added, a node's location, locationConfirmed and position may be modified and should not be changed externally.
-    public func addLocationNodeForCurrentPosition(locationNode: LocationNode) {
+    public func addLocationNodeForCurrentPosition(_ locationNode: LocationNode) {
         guard let currentPosition = currentScenePosition(),
         let currentLocation = currentLocation(),
         let sceneNode = self.sceneNode else {
@@ -319,7 +319,7 @@ public class SceneLocationView: ARSCNView, ARSCNViewDelegate {
         return locationNodes.filter { $0.tag == tag }
     }
 
-    public func removeLocationNode(locationNode: LocationNode) {
+    public func removeLocationNode(_ locationNode: LocationNode) {
         if let index = locationNodes.index(of: locationNode) {
             locationNodes.remove(at: index)
         }
@@ -333,10 +333,10 @@ public class SceneLocationView: ARSCNView, ARSCNViewDelegate {
         }
 
         for locationNode in locationNodes where !locationNode.locationConfirmed {
-            let currentPoint = CGPoint.pointWithVector(vector: currentPosition)
-            let locationNodePoint = CGPoint.pointWithVector(vector: locationNode.position)
+            let currentPoint = CGPoint.pointWithVector(currentPosition)
+            let locationNodePoint = CGPoint.pointWithVector(locationNode.position)
 
-            if !currentPoint.radiusContainsPoint(radius: CGFloat(SceneLocationView.sceneLimit), point: locationNodePoint) {
+            if !currentPoint.radiusContainsPoint(locationNodePoint, radius: CGFloat(SceneLocationView.sceneLimit)) {
                 confirmLocationOfLocationNode(locationNode)
             }
         }

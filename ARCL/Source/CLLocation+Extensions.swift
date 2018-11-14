@@ -63,9 +63,9 @@ public extension CLLocation {
     }
 
     public func translatedLocation(with translation: LocationTranslation) -> CLLocation {
-        let latitudeCoordinate = self.coordinate.coordinateWithBearing(bearing: 0, distanceMeters: translation.latitudeTranslation)
+        let latitudeCoordinate = self.coordinate.coordinateWithBearing(0, distanceMeters: translation.latitudeTranslation)
 
-        let longitudeCoordinate = self.coordinate.coordinateWithBearing(bearing: 90, distanceMeters: translation.longitudeTranslation)
+        let longitudeCoordinate = self.coordinate.coordinateWithBearing(90, distanceMeters: translation.longitudeTranslation)
 
         let coordinate = CLLocationCoordinate2D(
             latitude: latitudeCoordinate.latitude,
@@ -78,7 +78,7 @@ public extension CLLocation {
 }
 
 public extension CLLocationCoordinate2D {
-    public func coordinateWithBearing(bearing: Double, distanceMeters: Double) -> CLLocationCoordinate2D {
+    public func coordinateWithBearing(_ bearing: Double, distanceMeters: Double) -> CLLocationCoordinate2D {
 		// formula by http://www.movable-type.co.uk/scripts/latlong.html
 		let lat1 = self.latitude * Double.pi / 180
 		let lon1 = self.longitude * Double.pi / 180
