@@ -14,7 +14,7 @@ extension CGPoint {
         return CGPoint(x: CGFloat(vector.x), y: CGFloat(0 - vector.z))
     }
 
-    func radiusContainsPoint(_ point: CGPoint, radius: CGFloat) -> Bool {
+    func radius(_ radius: CGFloat, containsPoint point: CGPoint) -> Bool {
         let x = pow(point.x - self.x, 2)
         let y = pow(point.y - self.y, 2)
         let radiusSquared = pow(radius, 2)

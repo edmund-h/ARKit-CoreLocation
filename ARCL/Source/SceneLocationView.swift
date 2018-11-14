@@ -214,7 +214,7 @@ public class SceneLocationView: ARSCNView, ARSCNViewDelegate {
         sceneLocationEstimates = sceneLocationEstimates.filter({
             let point = CGPoint.pointWithVector($0.position)
 
-            let radiusContainsPoint = currentPoint.radiusContainsPoint(point, radius: CGFloat(SceneLocationView.sceneLimit))
+            let radiusContainsPoint = currentPoint.radius(CGFloat(SceneLocationView.sceneLimit), containsPoint: point)
 
             if !radiusContainsPoint {
                 locationDelegate?.sceneLocationViewDidRemoveSceneLocationEstimate(sceneLocationView: self, position: $0.position, location: $0.location)
@@ -336,7 +336,7 @@ public class SceneLocationView: ARSCNView, ARSCNViewDelegate {
             let currentPoint = CGPoint.pointWithVector(currentPosition)
             let locationNodePoint = CGPoint.pointWithVector(locationNode.position)
 
-            if !currentPoint.radiusContainsPoint(locationNodePoint, radius: CGFloat(SceneLocationView.sceneLimit)) {
+            if !currentPoint.radius(CGFloat(SceneLocationView.sceneLimit), containsPoint: locationNodePoint) {
                 confirmLocationOfLocationNode(locationNode)
             }
         }
